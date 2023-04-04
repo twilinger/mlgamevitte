@@ -10,9 +10,13 @@ public class BulletScript : Character, IDamageable
     public LayerMask enemyLayer = 8;
     public float force;
     public float damage = 3f;
+    public float delaySeconds = 5f;
     // Start is called before the first frame update
+    private WaitForSeconds cullDelay = null;
     void Start()
     {
+        cullDelay = new WaitForSeconds(delaySeconds);
+        StartCoroutine(DelayedCull());
         mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         rb = GetComponent<Rigidbody2D>();
         mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
@@ -36,5 +40,11 @@ public class BulletScript : Character, IDamageable
                 enemyAttributes.ApplyDamage(damage);
             }
         }
+    }
+    private IEnumerator DelayedCull()
+    {
+        yield return cullDelay;
+        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 }

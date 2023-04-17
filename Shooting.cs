@@ -15,13 +15,12 @@ public class Shooting : MonoBehaviour
     private float shootingDelay;
     public LayerMask enemyLayer = 8;
     public LayerMask bulletLayer = 7;
-    public float delaySeconds = 5f;
+
     // Start is called before the first frame update
-    private WaitForSeconds cullDelay = null;
+
     void Start()
         {
-            cullDelay = new WaitForSeconds(delaySeconds);
-            StartCoroutine(DelayedCull());
+
             mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         }
         // Update is called once per frame
@@ -45,15 +44,10 @@ public class Shooting : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Mouse1) && canFire)
             {
                 canFire = false;
-                Debug.Log("Player attempting Ranged attack");
+                Debug.Log("Player is attempting Ranged attack");
                 Instantiate(bullet, bulletTransform.position, Quaternion.identity);
             }
 
         }
-    private IEnumerator DelayedCull()
-    {
-        yield return cullDelay;
-        gameObject.SetActive(false);
-        Destroy(gameObject);
-    }
+
 }

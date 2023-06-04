@@ -10,15 +10,14 @@ public class Player : Character, IDamageable
     public KeyCode RangedAttackKey = KeyCode.Mouse1;
     public string xMoveAxis = "Horizontal";
 
+    public LayerMask jumpableGround = 6;
+
     [Header("Combat")]
     public Transform MeleeAttackOrigin = null;
-    //public Transform RangedAttackOrigin = null;
-    //public GameObject projectile = null;
     public float MeleeAttackRadius = 0.6f;
     public float MeleeDamage = 2f;
     public float MeleeAttackDelay = 1.1f;
-    //public float RangedAttackDamage = 3f;
-    //public float RangedAttackDelay = 0.5f;
+    public BoxCollider2D coll;
     public LayerMask enemyLayer = 8;
 
     private Camera mainCam;
@@ -39,16 +38,21 @@ public class Player : Character, IDamageable
     private bool isMeleeAttacking = false;
 
     // Start is called before the first frame update
-
+    void Start()
+    {
+        coll = GetComponent<BoxCollider2D>();
+    }
 
     // Update is called once per frame
     void Update()
     {
         GetInput();
-
+        IsGrounded();
+        //Debug.Log(IsGrounded());
         HandleJump();
         HandleMeleeAttack();
         HandleAnimations();
+
 
     }
 
@@ -71,7 +75,6 @@ public class Player : Character, IDamageable
         mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         moveIntentionX = Input.GetAxis(xMoveAxis);
         tryMeleeAttack = Input.GetKeyDown(MeleeAttackKey);
-        //tryRangedAttack = Input.GetKeyDown(RangedAttackKey);
         tryJump = Input.GetKeyDown(jumpKey);
     }
     private void HandleRun()
@@ -88,13 +91,22 @@ public class Player : Character, IDamageable
         Rb2D.velocity = new Vector2(moveIntentionX * speed, Rb2D.velocity.y);
     }
 
+    private bool IsGrounded()
+    {
+        //return Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, 1f, jumpableGround);
+        return Physics2D.CircleCast(coll.bounds.center , 1f, Vector2.down, 0.1f);
+
+
+    }
     private void HandleJump()
     {
-        if (tryJump && CheckGrounded())
+        if (tryJump && IsGrounded())
         {
+            Debug.Log("Tries to jump");
             Rb2D.velocity = new Vector2(Rb2D.velocity.x, jumpForce);
         }
     }
+    
 
     private void HandleMeleeAttack()
     {
@@ -116,15 +128,8 @@ public class Player : Character, IDamageable
         {
             timeUntilMeleeReady -= Time.deltaTime;
         }
-
-        //if (Input.GetKeyDown(KeyCode.Mouse1) && canFire)
-        //{
-        //    canFire = false;
-        //    Debug.Log("Player attempting Ranged attack");
-        //    Instantiate(bullet, bulletTransform.position, Quaternion.identity);
-        //}
-
     }
+
 
     private void HandleAnimations()
     {

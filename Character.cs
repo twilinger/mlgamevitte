@@ -15,6 +15,7 @@ public class Character : MonoBehaviour
     private Animator animator = null;
     private float currentHealth = 1f;
     public GameObject EnemyClone;
+    public bool respawnable = true;
 
 
     public Rigidbody2D Rb2D
@@ -62,18 +63,20 @@ public class Character : MonoBehaviour
         return Physics2D.Raycast(transform.position, -Vector2.up, groundLeeway);
     }
 
-    protected virtual void Die()
+    protected virtual void Die(bool respawnable)
     {
         gameObject.SetActive(false);
-        Invoke("Respawn", 3);
-
+        if (respawnable)
+        {
+            Invoke("Respawn", 3);
+        }
     }
     public virtual void ApplyDamage(float amount)
     {
         CurrentHealth -= amount;
         if (CurrentHealth <= 0)
         {
-            Die();
+            Die(respawnable);
         }
     }
     void Respawn()

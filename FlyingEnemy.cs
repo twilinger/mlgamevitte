@@ -9,6 +9,7 @@ public class FlyingEnemy: Character, IDamageable
     public Transform startingPoint;
     private GameObject player;
     public float RangedAttackDamage = 3f;
+    public bool FlEnemyRespawnable = false;
 
 
     // Start is called before the first frame update
@@ -65,7 +66,7 @@ public class FlyingEnemy: Character, IDamageable
 
             if (CurrentHealth <= 0)
             {
-                Die();
+                Die(FlEnemyRespawnable);
             }
     }
     public virtual void ApplyDamage(float amount)
@@ -73,7 +74,7 @@ public class FlyingEnemy: Character, IDamageable
         CurrentHealth -= amount;
         if (CurrentHealth <= 0)
         {
-            Die();
+            Die(FlEnemyRespawnable);
         }
     }
 }

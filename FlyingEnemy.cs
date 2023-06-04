@@ -68,5 +68,12 @@ public class FlyingEnemy: Character, IDamageable
                 Die();
             }
     }
-
+    public virtual void ApplyDamage(float amount)
+    {
+        CurrentHealth -= amount;
+        if (CurrentHealth <= 0)
+        {
+            Die();
+        }
+    }
 }

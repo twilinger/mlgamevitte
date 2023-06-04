@@ -65,7 +65,7 @@ public class Character : MonoBehaviour
     protected virtual void Die()
     {
         gameObject.SetActive(false);
-        Invoke("Respawn", 2);
+        Invoke("Respawn", 3);
 
     }
     public virtual void ApplyDamage(float amount)
@@ -78,6 +78,7 @@ public class Character : MonoBehaviour
     }
     void Respawn()
     {
+        CurrentHealth = healthPool;
         gameObject.SetActive(true);
     }
     

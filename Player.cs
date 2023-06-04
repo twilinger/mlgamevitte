@@ -12,13 +12,13 @@ public class Player : Character, IDamageable
 
     [Header("Combat")]
     public Transform MeleeAttackOrigin = null;
-    public Transform RangedAttackOrigin = null;
-    public GameObject projectile = null;
+    //public Transform RangedAttackOrigin = null;
+    //public GameObject projectile = null;
     public float MeleeAttackRadius = 0.6f;
     public float MeleeDamage = 2f;
     public float MeleeAttackDelay = 1.1f;
-    public float RangedAttackDamage = 3f;
-    public float RangedAttackDelay = 0.5f;
+    //public float RangedAttackDamage = 3f;
+    //public float RangedAttackDelay = 0.5f;
     public LayerMask enemyLayer = 8;
 
     private Camera mainCam;
@@ -35,11 +35,8 @@ public class Player : Character, IDamageable
     private float moveIntentionX = 0;
     private bool tryJump = false;
     private bool tryMeleeAttack = false;
-    private bool tryRangedAttack = false;
     private float timeUntilMeleeReady = 0;
-    private float timeUntilRangedReady = 0;
     private bool isMeleeAttacking = false;
-    private bool isRangedAttacking = false;
 
     // Start is called before the first frame update
 
@@ -51,7 +48,6 @@ public class Player : Character, IDamageable
 
         HandleJump();
         HandleMeleeAttack();
-        //HandleRangedAttack();
         HandleAnimations();
 
     }
@@ -75,7 +71,7 @@ public class Player : Character, IDamageable
         mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         moveIntentionX = Input.GetAxis(xMoveAxis);
         tryMeleeAttack = Input.GetKeyDown(MeleeAttackKey);
-        tryRangedAttack = Input.GetKeyDown(RangedAttackKey);
+        //tryRangedAttack = Input.GetKeyDown(RangedAttackKey);
         tryJump = Input.GetKeyDown(jumpKey);
     }
     private void HandleRun()
@@ -120,30 +116,13 @@ public class Player : Character, IDamageable
         {
             timeUntilMeleeReady -= Time.deltaTime;
         }
-    }
-    private void HandleRangedAttack()
-    {
-        mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 rotation = mousePos - transform.position;
-        float rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, rotZ);
 
-        if (!canFire)
-        {
-            timer += Time.deltaTime;
-            if (timer > shootingDelay)
-            {
-                canFire = true;
-                timer = 2;
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Mouse1) && canFire)
-        {
-            canFire = false;
-            Debug.Log("Player attempting Ranged attack");
-            Instantiate(bullet, bulletTransform.position, Quaternion.identity);
-        }
+        //if (Input.GetKeyDown(KeyCode.Mouse1) && canFire)
+        //{
+        //    canFire = false;
+        //    Debug.Log("Player attempting Ranged attack");
+        //    Instantiate(bullet, bulletTransform.position, Quaternion.identity);
+        //}
 
     }
 
@@ -157,13 +136,7 @@ public class Player : Character, IDamageable
                 StartCoroutine(MeleeAttackAnimDelay());
             }
         }
-       // if (tryRangedAttack)
-        //{
-        //    if (!isRangedAttacking)
-        //    {
-        //        StartCoroutine(RangedAttackAnimDelay());
-        //    }
-        //}
+
 
         if (tryJump && CheckGrounded() || Rb2D.velocity.y > 1f)
         {
@@ -193,13 +166,6 @@ public class Player : Character, IDamageable
         yield return new WaitForSeconds(MeleeAttackDelay);
         isMeleeAttacking = false;
     }
-    //private IEnumerator RangedAttackAnimDelay()
-    //{
-    //    Animator.SetTrigger("IsRangedAttacking");
-    //    isRangedAttacking = true;
-    //    yield return new WaitForSeconds(RangedAttackDelay);
-    //    isRangedAttacking = false;
-    //}
 
 
 

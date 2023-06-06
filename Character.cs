@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Character : MonoBehaviour
 {
@@ -15,7 +16,11 @@ public class Character : MonoBehaviour
     private Animator animator = null;
     private float currentHealth = 1f;
     public GameObject EnemyClone;
+    
+    
     public bool respawnable = true;
+    public static int EnemiesSlain = 0;
+
 
 
     public Rigidbody2D Rb2D

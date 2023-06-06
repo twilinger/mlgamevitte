@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class FlyingEnemy: Character, IDamageable
+public class FlyingEnemy : Character, IDamageable
 {
 
     public bool chase = false;
@@ -10,6 +11,7 @@ public class FlyingEnemy: Character, IDamageable
     private GameObject player;
     public float RangedAttackDamage = 3f;
     public bool FlEnemyRespawnable = false;
+    public Text enemiesText;
 
 
     // Start is called before the first frame update
@@ -26,13 +28,13 @@ public class FlyingEnemy: Character, IDamageable
         {
             return;
         }
-        if (chase==true)
+        if (chase == true)
         {
             Chase();
         }
         //else
         //{
-            //он вернется на стартовую позицию(я передумал, он не будет возвращаться)
+        //он вернется на стартовую позицию(я передумал, он не будет возвращаться)
         //    ReturnStartPoint();
         //}
         Flip();
@@ -40,14 +42,14 @@ public class FlyingEnemy: Character, IDamageable
 
     private void Chase()
     {
-        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime); 
+        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
         //это говно надо подправить чтобы он после атаки двигался назад
     }
 
     //private void ReturnStartPoint()
     //{
     //    transform.position = Vector2.MoveTowards(transform.position, startingPoint.transform.position, speed * Time.deltaTime);
-        
+
     //}
 
     private void Flip()
@@ -64,17 +66,25 @@ public class FlyingEnemy: Character, IDamageable
     private void OnCollisionEnter(Collision collision)
     {
 
-            if (CurrentHealth <= 0)
-            {
-                Die(FlEnemyRespawnable);
-            }
+        if (CurrentHealth <= 0)
+        {
+            EnemiesSlain++;
+            enemiesText.text = "Enemies Slain: " + EnemiesSlain;
+            Die(FlEnemyRespawnable);
+        }
     }
     public virtual void ApplyDamage(float amount)
     {
         CurrentHealth -= amount;
         if (CurrentHealth <= 0)
         {
-            Die(FlEnemyRespawnable);
+            if (CurrentHealth <= 0)
+            {
+                //Debug.Log("enemies before" + EnemiesSlain);
+                EnemiesSlain++;
+                enemiesText.text = "Enemies Slain: " + EnemiesSlain;
+                Die(FlEnemyRespawnable);
+            }
         }
     }
 }

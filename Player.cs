@@ -11,6 +11,9 @@ public class Player : Character, IDamageable
     public string xMoveAxis = "Horizontal";
 
     public LayerMask jumpableGround = 6;
+    public Transform groundCheck;
+    bool IsGrounded;
+    int jumps = 0;
 
     [Header("Combat")]
     public Transform MeleeAttackOrigin = null;
@@ -47,12 +50,9 @@ public class Player : Character, IDamageable
     void Update()
     {
         GetInput();
-        IsGrounded();
-        //Debug.Log(IsGrounded());
         HandleJump();
         HandleMeleeAttack();
         HandleAnimations();
-
 
     }
 
@@ -91,19 +91,18 @@ public class Player : Character, IDamageable
         Rb2D.velocity = new Vector2(moveIntentionX * speed, Rb2D.velocity.y);
     }
 
-    private bool IsGrounded()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        //return Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, 1f, jumpableGround);
-        return Physics2D.CircleCast(coll.bounds.center , 1f, Vector2.down, 0.1f);
-
-
+        jumps = 0;
     }
+
     private void HandleJump()
     {
-        if (tryJump && IsGrounded())
+        if (tryJump && jumps == 0)
         {
             Debug.Log("Tries to jump");
             Rb2D.velocity = new Vector2(Rb2D.velocity.x, jumpForce);
+            jumps++;
         }
     }
     

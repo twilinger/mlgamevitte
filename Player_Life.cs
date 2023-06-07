@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Player_Life : MonoBehaviour
+public class Player_Life : Character
 {
     private Animator anim;
     public Rigidbody2D rb;
@@ -26,6 +26,7 @@ public class Player_Life : MonoBehaviour
     private void PlayerDeath()
     {
         rb.bodyType = RigidbodyType2D.Static;
+        EnemiesSlain = 0;
         anim.SetTrigger("Dead");
 
     }

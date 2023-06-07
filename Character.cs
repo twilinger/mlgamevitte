@@ -20,6 +20,7 @@ public class Character : MonoBehaviour
     
     public bool respawnable = true;
     public static int EnemiesSlain = 0;
+    public static int NeedEnemiesSlain;
 
 
 
@@ -44,7 +45,6 @@ public class Character : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-
         if (GetComponent<Rigidbody2D>())
         {
             rb2D = GetComponent<Rigidbody2D>();
@@ -62,7 +62,6 @@ public class Character : MonoBehaviour
     {
 
     }
-
     protected bool CheckGrounded()
     {
         return Physics2D.Raycast(transform.position, -Vector2.up, groundLeeway);

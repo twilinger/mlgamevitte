@@ -7,7 +7,7 @@ public class StickToPlat : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "character")
+        if (collision.gameObject.name == "Character")
         {
             collision.gameObject.transform.SetParent(transform);
         }
@@ -15,7 +15,7 @@ public class StickToPlat : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "character")
+        if (collision.gameObject.name == "Character")
         {
             collision.gameObject.transform.SetParent(null);
         }

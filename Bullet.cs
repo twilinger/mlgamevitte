@@ -30,15 +30,15 @@ public class Bullet : MonoBehaviour
         FlyingEnemy flenemy = hitInfo.GetComponent<FlyingEnemy>();
         if (enemy != null)
         {
-            Debug.Log(Bullet_damage, hitInfo);
+            //Debug.Log(Bullet_damage, hitInfo);
             enemy.ApplyDamage(Bullet_damage);
         }
         if (flenemy != null)
         {
-            Debug.Log(Bullet_damage, hitInfo);
+            //Debug.Log(Bullet_damage, hitInfo);
             flenemy.ApplyDamage(Bullet_damage);
         }
-        if (hitInfo.name == "Enemy1" || hitInfo.name == "FlyingEnemy" || hitInfo.name == "Tilemap")
+        if (hitInfo.transform.gameObject.layer == LayerMask.NameToLayer("Enemy") || hitInfo.name == "FlyingEnemy" || hitInfo.name == "Tilemap")
         {
             Destroy(gameObject);
         }

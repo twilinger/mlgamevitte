@@ -38,7 +38,7 @@ public class Bullet : MonoBehaviour
             //Debug.Log(Bullet_damage, hitInfo);
             flenemy.ApplyDamage(Bullet_damage);
         }
-        if (hitInfo.transform.gameObject.layer == LayerMask.NameToLayer("Enemy") || hitInfo.name == "FlyingEnemy" || hitInfo.name == "Tilemap")
+        if (hitInfo.transform.gameObject.CompareTag("Enemy") || hitInfo.name == "FlyingEnemy" || hitInfo.name == "Tilemap")
         {
             Destroy(gameObject);
         }

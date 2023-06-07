@@ -12,6 +12,7 @@ public class FlyingEnemy : Character, IDamageable
     public float RangedAttackDamage = 3f;
     public bool FlEnemyRespawnable = false;
     public Text enemiesText;
+    
 
 
     // Start is called before the first frame update
@@ -43,7 +44,6 @@ public class FlyingEnemy : Character, IDamageable
     private void Chase()
     {
         transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
-        //это говно надо подправить чтобы он после атаки двигался назад
     }
 
     //private void ReturnStartPoint()
@@ -61,16 +61,6 @@ public class FlyingEnemy : Character, IDamageable
         else
         {
             transform.rotation = Quaternion.Euler(0, 180, 0);
-        }
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-
-        if (CurrentHealth <= 0)
-        {
-            EnemiesSlain++;
-            enemiesText.text = "Enemies Slain: " + EnemiesSlain;
-            Die(FlEnemyRespawnable);
         }
     }
     public virtual void ApplyDamage(float amount)

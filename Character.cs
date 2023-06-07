@@ -14,11 +14,11 @@ public class Character : MonoBehaviour
 
     private Rigidbody2D rb2D = null;
     private Animator animator = null;
-    private float currentHealth = 1f;
+    private float currentHealth = 10f;
     public GameObject EnemyClone;
     
     
-    public bool respawnable = true;
+    public bool respawnable = false;
     public static int EnemiesSlain = 0;
     public static int NeedEnemiesSlain;
 
@@ -56,7 +56,7 @@ public class Character : MonoBehaviour
 
         currentHealth = healthPool;
     }
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -66,7 +66,6 @@ public class Character : MonoBehaviour
     {
         return Physics2D.Raycast(transform.position, -Vector2.up, groundLeeway);
     }
-
     protected virtual void Die(bool respawnable)
     {
         gameObject.SetActive(false);

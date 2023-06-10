@@ -4,18 +4,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class ItemCollector : MonoBehaviour
-{
-    public static int collectedKeys = 0;
-    public Text keysText;
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    public class ItemCollector : MonoBehaviour
     {
-        if(collision.gameObject.CompareTag("Key"))
+        public static int collectedKeys = 0;
+        public Text keysText;
+
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            Destroy(collision.gameObject);
-            collectedKeys++;
-            keysText.text = "Keys Collected: " + collectedKeys;
+            if (collision.gameObject.CompareTag("Key"))
+            {
+                Destroy(collision.gameObject);
+                collectedKeys++;
+                keysText.text = "Keys Collected: " + 1;
+            }
+            
         }
+        
     }
-}
+
